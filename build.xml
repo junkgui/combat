@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!-- ====================================================================== 
+     May 13, 2005 8:27:51 PM                                                        
+
+     project    
+     description
+                   
+     Hadden                                                                
+     ====================================================================== -->
+<project name="project" default="dist">
+    <description>
+            description
+    </description>
+	<property name="src" value="src"/>
+	<property name="dist" value="dist"/>
+	<property name="lib" value="lib"/>
+	<property name="classes" value="classes"/>
+	
+	
+	<fileset dir="lib" id="libs">
+    	<include name="*.jar"/>
+	</fileset>
+	
+	<path id="classpath">
+		<filelist refid="libs"/>
+	</path>
+
+    <!-- ================================= 
+          target: dist              
+         ================================= -->
+    <target name="dist" depends="compile" description="">
+        <jar basedir="${classes}" destfile="${dist}/combat.jar">
+        	<manifest>
+	        	<attribute name="Main-Class" value="org.junk.gui.Main"/>
+	        	<attribute name="Class-Path" value=""/>
+        	</manifest>
+        	<include name="**/*.class"/>
+        	<fileset dir="${src}">
+        		<include name="**/*.png"/>
+        	</fileset>
+        </jar>
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - - 
+          target: compile                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="compile">
+    	<javac  optimize="true" target="1.5" source="1.5" fork="false" debug="true" deprecation="true" destdir="${classes}" srcdir="${src}">
+    		<classpath refid="classpath"/>
+    	</javac>
+    </target>
+
+</project>
+
